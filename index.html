@@ -26,15 +26,18 @@
   <body>
     <div id="map"></div>
     <script>
+      const options = {}
       navigator.geolocation.watchPosition(
         successCallback,
         errorCallback,
+        options,
       );
       function errorCallback(){}
       function successCallback(position) {
         console.log("change");
-        const { accuracy, lat, long, altitude, heading, speed } =
+        const { accuracy, latitude, longitude, altitude, heading, speed } =
           position.coords;
+          console.log(position)
         // Show a map centered at latitude / longitude.
         const key = "Cku0hoGuiEWdShZBEE0C";
         const map = new maplibregl.Map({
@@ -52,7 +55,7 @@
         fetch(`https://api.maptiler.com/geolocation/ip.json?key=${key}`)
           .then((response) => response.json())
           .then((data) => {
-            const userLngLat = [long, lat];
+            const userLngLat = [longitude, latitude];
             map.jumpTo({
               center: userLngLat,
               zoom: 17,
